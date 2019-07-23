@@ -41,55 +41,7 @@ console.log(mytext + '222!!!');
     </script>
 
     <script src="https://unpkg.com/showdown@1.9.0/dist/showdown.min.js"></script>
-    <script>
-        var inCode = false;
-        var codeChunk = '';
-
-        var myext = {
-            type: 'output',
-            regex: /.*/g, // new RegExp('.*'),
-            replace: function (text) {
-                // console.log('!!!' + text + '!!!');
-
-                if (text.startsWith('</' + 'code>')) {
-                    // console.log('@@@' + codeChunk);
-                    eval(codeChunk);
-                    codeChunk = '';
-                    inCode = false;
-                }
-
-                if (inCode) {
-                    codeChunk += text + '\n';
-                } else if (text.startsWith('<pre><code>')) {
-                    inCode = true;
-                    codeChunk += text.substring('<pre><code>'.length) + '\n';
-                }
-
-                if (inCode) {
-                    // console.log('###' + code + '###');
-                    // eval(code);
-                }
-                return text;
-            }
-        };
-
-        function run() {
-            // TODO check how to load dynamically by loading an external file
-            // var file = document.location.search.substring(6);
-            // document.writeln("<script type='text/markdown' src='" + file + "'><" + "/script>");
-
-            showdown.extension('myext', myext); // register extension 'myext'
-
-            var text = document.scripts[0].text,
-                target = document.getElementById('targetDiv'),
-                converter = new showdown.Converter({ extensions: ['myext'] }),
-                html = converter.makeHtml(text);
-
-            target.innerHTML = html;
-        }
-
-        run();
-    </script>
+    <script src="js/renderer.js"></script>
 </body>
 
 </html>
