@@ -1,5 +1,7 @@
 var inCode = false;
 var codeChunk = '';
+var consoleOutput = '';
+const origConsole = console;
 
 var myext = {
     type: 'output',
@@ -7,7 +9,13 @@ var myext = {
     replace: function (text) {
 
         if (text.startsWith('</code>')) {
+            consoleOutput = '';
+            // capture console log - TODO debug, info, warn, error
+            console.log = function (msg) { consoleOutput += msg + '\n'; };
             eval(codeChunk); // TODO dispatch to a different fn based on the type of code block
+
+            // restore console
+            console.log = origConsole.log;
             codeChunk = '';
             inCode = false;
         }
@@ -19,7 +27,13 @@ var myext = {
             codeChunk += text.substring('<pre><code>'.length) + '\n';
         }
 
-        return text;
+        if (!inCode && consoleOutput !== '') {
+            const returnValue = text + "\n<pre class='console-log'>Output: <code>" + consoleOutput + '</code></pre>';
+            consoleOutput = '';
+            return returnValue;
+        } else {
+            return text;
+        }
     }
 };
 
