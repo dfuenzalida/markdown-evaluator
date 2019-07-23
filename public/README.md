@@ -12,3 +12,8 @@ This project contains a Markdown renderer capable of identifying code blocks in 
   * Execute the captured code (JS) or compiled code (output from the compilation step, if TS)
   * Renders the output of the execution next to the code block
 
+## Development
+
+* Requires NodeJS
+* Install the packages with `npm install`
+* Start the web server with `npm run serve`, open the page at http://127.0.0.1:8080

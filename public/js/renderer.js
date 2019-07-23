@@ -12,6 +12,7 @@ var myext = {
             consoleOutput = '';
             // capture console log - TODO debug, info, warn, error
             console.log = function (msg) { consoleOutput += msg + '\n'; };
+            // origConsole.log('>>>' + codeChunk + '<<<');
             eval(codeChunk); // TODO dispatch to a different fn based on the type of code block
 
             // restore console
