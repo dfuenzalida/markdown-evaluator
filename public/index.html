@@ -24,24 +24,22 @@
 ## Code sample
 
 ```
-var mytext = 'demo';
+let mytext = 'demo';
 console.log(mytext + '!!!');
 ```
 
 another block:
 
 ```
-var mytext = 'demo2';
-console.log(mytext + '222!!!');
+let anotherText = 'This is another block.';
+console.log(anotherText);
 ```
-
 
 ## What just happened?
 
-* the file is added as a new script derived from the query in the URL
-* the page finds the script of type "text/markdown" in the page
-* it calls showdown to render the page
-* TODO: add an extension/hook to call custom code when a code block is reached
+* the page loaded
+* it calls showdown to render one block of markdown inside page
+* An extension/hook calls custom code when a code block is reached, evaluating it and capturing the output
     </script>
 
     <script src="https://unpkg.com/showdown@1.9.0/dist/showdown.min.js"></script>
