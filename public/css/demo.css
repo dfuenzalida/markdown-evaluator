@@ -1,0 +1,16 @@
+pre {
+    background-color: lightgrey;
+    padding: 8px;
+}
+
+.output-header {
+   font-size: 0.7em;
+   font-weight: bolder;
+   background-color: lightgreen;
+   padding-left: 8px;
+}
+
+.console-log {
+    color: white;
+    background-color: #333;
+}
