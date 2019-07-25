@@ -50,19 +50,36 @@ var myext = {
     }
 };
 
-function run() {
-    // TODO check how to load dynamically by loading an external file, like:
-    //   var file = document.location.search.substring(6);
-    //   document.writeln("<script type='text/markdown' src='" + file + "'><" + "/script>");
+/*
+ * Renders the contents of a Markdown file
+ */
+function render(contents) {
+    showdown.extension('myext', myext); // register the extension function 'myext'
 
-    showdown.extension('myext', myext); // register extension 'myext'
-
-    var text = document.scripts[0].text, // TODO filter scripts of type 'text/markdown'
+    var text = contents,
         target = document.getElementById('targetDiv'),
         converter = new showdown.Converter({ extensions: ['myext'] }),
         html = converter.makeHtml(text);
 
     target.innerHTML = html;
+}
+
+/*
+ * Loads the document in an Ajax call, calls the render function
+ */
+function run() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        render(this.responseText);
+      }
+    };
+    var file = "demo.md";
+    if (location.search !== '') {
+        file = document.location.search.substring(6);
+    }
+    xhttp.open("GET", file, true);
+    xhttp.send();
 }
 
 run();
