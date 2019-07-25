@@ -22,12 +22,10 @@ var myext = {
             });
 
             // eval typescript output
+            // TODO dispatch to a different fn based on the type of code block
             eval(result.outputText);
             
-            // origConsole.log('>>>' + codeChunk + '<<<');
-            //eval(codeChunk); // TODO dispatch to a different fn based on the type of code block
-
-            // restore console
+            // restore the console
             console.log = origConsole.log;
             codeChunk = '';
             inCode = false;
@@ -41,7 +39,9 @@ var myext = {
         }
 
         if (!inCode && consoleOutput !== '') {
-            const returnValue = text + "\n<pre class='console-log'>Output: <code>" + consoleOutput + '</code></pre>';
+            const returnValue = text +
+                "\n<div class='output-header'>Output:</div>" +
+                "\n<pre class='console-log'><code>" + consoleOutput + '</code></pre>';
             consoleOutput = '';
             return returnValue;
         } else {
