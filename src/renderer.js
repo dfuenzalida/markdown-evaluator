@@ -1,3 +1,6 @@
+var showdown = require("showdown");
+var ts = require("typescript");
+
 var inCode = false;
 var codeChunk = '';
 var consoleOutput = '';
@@ -12,8 +15,17 @@ var myext = {
             consoleOutput = '';
             // capture console log - TODO debug, info, warn, error
             console.log = function (msg) { consoleOutput += msg + '\n'; };
+
+            // inject ts compiler
+            var result = ts.transpileModule(codeChunk, {
+                compilerOptions: { module: ts.ModuleKind.CommonJS }
+            });
+
+            // eval typescript output
+            eval(result.outputText);
+            
             // origConsole.log('>>>' + codeChunk + '<<<');
-            eval(codeChunk); // TODO dispatch to a different fn based on the type of code block
+            //eval(codeChunk); // TODO dispatch to a different fn based on the type of code block
 
             // restore console
             console.log = origConsole.log;
